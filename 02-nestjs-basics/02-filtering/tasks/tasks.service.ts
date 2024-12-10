@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import { Task, TaskStatus } from "./task.model";
 
 @Injectable()
@@ -36,9 +36,24 @@ export class TasksService {
     },
   ];
 
-  getFilteredTasks(
-    status?: TaskStatus,
-    page?: number,
-    limit?: number,
-  ): Task[] {}
+  getFilteredTasks(status?: TaskStatus, page = 1, limit = 10): Task[] {
+    if (Number(page) < 0 || Number(limit) < 0) {
+      throw new BadRequestException("Page or limit is not correct");
+    }
+
+    let filteredTasks = this.tasks;
+
+    if (status) {
+      if (!Object.values(TaskStatus).includes(status)) {
+        throw new BadRequestException("Status is not correct");
+      }
+
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+
+    const start = (Number(page) - 1) * Number(limit);
+    const end = start + Number(limit);
+
+    return filteredTasks.slice(start, end);
+  }
 }
