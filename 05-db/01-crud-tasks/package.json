@@ -2,5 +2,17 @@
   "scripts": {
     "start": "nest start --watch",
     "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --no-warnings --experimental-vm-modules\" NODE_ENV=test jest --config jest.config.js --runInBand"
+  },
+  "dependencies": {
+    "@nestjs/common": "^9.4.3",
+    "@nestjs/core": "^9.4.3",
+    "@nestjs/testing": "^9.4.3",
+    "@nestjs/typeorm": "^10.0.2",
+    "class-validator": "^0.14.1",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
   }
 }
